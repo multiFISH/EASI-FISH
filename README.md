@@ -19,7 +19,7 @@ https://github.com/GFleishman/greedypy
 
 3. Spot count: 
 
-4: Spot assignment
+4. Spot assignment
 
 5. Lipofuscin handling
 
