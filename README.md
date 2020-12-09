@@ -1,7 +1,8 @@
-# multiFISH
-Data analysis pipeline for multiFISH data
+# Analysis pipeline for EASI-FISH data
 
 # Image analysis: 
+
+
 
 1. Image files and stitching: 
 n5 file system:
