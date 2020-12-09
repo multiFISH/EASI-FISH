@@ -2,9 +2,7 @@
 
 
 ### Image analysis: 
-
 ![](/EASI-FISH_pipeline.png)
-
 1. Image files and stitching: 
 n5 file system:
 https://github.com/saalfeldlab/n5
