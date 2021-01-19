@@ -11,8 +11,7 @@ Table of Contents
    * [Pipeline ](#pipeline)
 # Description #
 Characterizing the spatial organization and morphological properties of molecular cell types is fundamental for underpinning tissue function. Expansion-Assisted Iterative Fluorescence *In Situ* Hybridization (EASI-FISH) performs large-scale, multi-round, high resolution FISH imaging that allows gene expression profiling of molecular cell types in thick tissue specimens (300µm). Example dataset from EASI-FISH (scale bar: 100µm).
-<p align="center">
-  <img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/EASI-FISH_example.png" align="left" width="500">
+<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/EASI-FISH_example.png" align="left" width="500">
 </p>
 To address the challenge in analyzing multi-terabyte imaging data EASI-FISH produces, we provide a computational pipeline that allows for rapidly processing of such datasets.  The pipeline, which includes automated image stitching, multi-round image registration, cell segmentation, and spot extraction could facilitate adoption of high-plex FISH as a routine laboratory method for tissue analysis. We also envision this pipeline being adapted for analysis of other image-based spatial transcriptomic data. 
 ![](/docs/png/Pipeline.png)
