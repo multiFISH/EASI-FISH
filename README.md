@@ -27,7 +27,7 @@ The pipeline takes advantage of the [n5](https://github.com/saalfeldlab/n5) file
 
 # Stitching #
 For large sample volumes, multiple sub-volumes (tiles) need to be sequentially acquired and computational stitched into a single large image. The previously developed Apache Spark-based high-performance computing pipeline [stitching-spark](https://github.com/saalfeldlab/stitching-spark) (Gao et al., 2019) is used for image stitching. The pipeline first performed a flat-field correction for each tile to account for intensity variations and then stitched the intensity-corrected tiles together using an automated and iteratively refined prediction model based on tile coordinates.  
-![](/docs/png/Stitching.png)
+![](/docs/png/Stitching.png =250x)
 
 # Registration #
 To register image volumes across multiple rounds of FISH, a robust and fully automatic non-rigid registration pipeline[BigSTREAM](https://github.com/GFleishman/stream) is developed. The analysis pipeline first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (python implementation)(Yushkevich, 2016) on each block. 
