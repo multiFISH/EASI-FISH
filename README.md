@@ -14,6 +14,7 @@ Characterizing the spatial organization and morphological properties of molecula
 <p align="center">
   <img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/EASI-FISH_example.png" width="500">
 </p>
+
 To address the challenge in analyzing multi-terabyte imaging data EASI-FISH produces, we provide a computational pipeline that allows for rapidly processing of such datasets.  The pipeline, which includes automated image stitching, multi-round image registration, cell segmentation, and spot extraction could facilitate adoption of high-plex FISH as a routine laboratory method for tissue analysis. We also envision this pipeline being adapted for analysis of other image-based spatial transcriptomic data. 
 ![](/docs/png/Pipeline.png)
 The pipeline takes advantage of the [n5](https://github.com/saalfeldlab/n5) filesystem to allow for rapid data reading and writing. Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) allows for visualization of large image data visualization on a laptop.  
