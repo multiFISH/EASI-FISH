@@ -29,13 +29,14 @@ To register image volumes across multiple rounds of FISH, a robust and fully aut
 
 # Segmentation #
 Accurate segmentation of in situ-stained volumetric (3D) fluorescence image data has been a long-standing challenge that can considerably degrade the accuracy of multiplexed FISH analysis pipelines.To overcome this challenge, a deep learning-based automatic 3D segmentation, called [Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) was developed. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. 
-<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Segmentation.png" width="600">
+<p align="center">
+  <img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Segmentation.png" width="600">
+</p>
 
 # Spot detection #
 A spot detection pipeline based on Airlocalize (Lionnet et al., 2011) was developed that allows for parallel processing of chunked overlapping image blocks simultaneously. 
-
-<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Spot_detection.png" align="left" width="800">
-
+<p align="center">
+  <img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Spot_detection.png" width="800">
 </p>
 
 # Additional analysis #
