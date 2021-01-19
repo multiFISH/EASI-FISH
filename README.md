@@ -34,7 +34,7 @@ Accurate segmentation of in situ-stained volumetric (3D) fluorescence image data
 # Spot detection #
 A spot detection pipeline based on Airlocalize (Lionnet et al., 2011) was developed that allows for parallel processing of chunked overlapping image blocks simultaneously. 
 
-<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Spot_detection.png" align="left" width="800">
+<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Spot_detection.png" align="left" width="800"> <br />
 
 
 
