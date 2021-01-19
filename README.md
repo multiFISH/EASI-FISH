@@ -36,7 +36,7 @@ A spot detection pipeline based on Airlocalize (Lionnet et al., 2011) was develo
 
 <img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/Spot_detection.png" align="left" width="800">
 
-<br><hr><br>
+</p>
 
 # Additional analysis #
 [Additional analysis](https://github.com/multiFISH/EASI-FISH/tree/master/docs/post_processing), such as dense spots analysis, intensity measurements are provided. 
