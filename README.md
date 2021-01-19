@@ -10,8 +10,8 @@ Table of Contents
    * [Installation and Examples](#installation_and_examples)
    * [Pipeline ](#pipeline)
 # Description #
-Characterizing the spatial organization and morphological properties of molecular cell types is fundamental for underpinning tissue function. Expansion-Assisted Iterative Fluorescence In Situ Hybridization (EASI-FISH) performs large-scale, multi-round, high resolution FISH imaging that allows gene expression profiling of molecular cell types in thick tissue specimens (300µm). <br/>
-<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/EASI-FISH_example.png" align="right" width="600">
+<img src="https://github.com/multiFISH/EASI-FISH/blob/master/docs/png/EASI-FISH_example.png" align="right" width="600">Characterizing the spatial organization and morphological properties of molecular cell types is fundamental for underpinning tissue function. Expansion-Assisted Iterative Fluorescence In Situ Hybridization (EASI-FISH) performs large-scale, multi-round, high resolution FISH imaging that allows gene expression profiling of molecular cell types in thick tissue specimens (300µm). <br/>
+
 Example dataset from EASI-FISH (scale bar: 100µm).<br/>
 
 
