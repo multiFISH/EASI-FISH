@@ -14,7 +14,7 @@ Table of Contents
 
 ## Description #
 This pipeline is used to analyze large-scale, multi-round, high-resolution image data acquired using EASI-FISH (Expansion-Assisted Iterative Fluorescence *In Situ* Hybridization). It includes automated image stitching, distributed multi-round image registration, cell segmentation, and distributed spot detection. We also envision this pipeline being adapted for analysis of other image-based spatial transcriptomic data. 
-![](/resources/Pipeline.gif)
+![](/resources/Pipeline.mov)
 The pipeline takes advantage of the [n5](https://github.com/saalfeldlab/n5) filesystem to allow for rapid data reading and writing. Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) allows for visualization of large image data visualization on a laptop.  
 
 ## Pipeline #
