@@ -46,7 +46,7 @@ To use `hAirlocalize`:
 ## Additional information #
 
 ### Post processing
-Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/docs/post_processing), such as assign spots, filter ROIs, dense spots analysis, intensity measurements, lipofuscin subtraction are included in the repository. 
+Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, filter ROIs, dense spots analysis, intensity measurements, lipofuscin subtraction are included in the repository. 
 
 ### Example data #
 Example [datasets]() are provided for testing.  
