@@ -27,7 +27,7 @@ The previously developed Apache Spark-based high-performance computing pipeline 
 
 
 ### Registration #
-We developed [BigStream](https://github.com/GFleishman/stream) for distributed alignment multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (Yushkevich, 2016) on each block. 
+We developed [BigStream](https://github.com/GFleishman/bigstream) for distributed alignment multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (Yushkevich, 2016) on each block. 
 
 `bigstream` can be installed with `pip`:\
     `pip install bigstream`
