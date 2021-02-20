@@ -41,8 +41,6 @@ We developed [BigStream](https://github.com/GFleishman/bigstream) for distribute
 ### Spot detection #
 We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, Airlocalize ([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection in large image datasets.  
 
-To use `hAirlocalize`:
-
 ## Additional information #
 
 ### Post processing
