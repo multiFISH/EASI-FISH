@@ -14,18 +14,18 @@ if __name__ == '__main__':
     out_dir        = sys.argv[3]  # directory where the output file should be saved 
     
 lb=imread(lb_dir)
-fx=sorted(glob(spot_dir+"*.txt"))
+fx=sorted(glob(spot_dir+"/*.txt"))
 
 lb_id=np.unique(lb[lb!=0])
 z,y,x=lb.shape
-# s=[0.92,0.92,0.84] ## voxel size in segmentation image
-s=[8,8,2]
+s=[0.92,0.92,0.84] ## voxel size in segmentation image
+
 count=pd.DataFrame(np.empty([len(lb_id), 0]), index=lb_id)
 
 for f in fx:
     r=os.path.basename(f).split('/')[-1]
     r=r.split('.')[0]
-    spot=np.loadtxt(f)
+    spot=np.loadtxt(f, delimiter=',')
     n = len(spot)
     spot[:,:3] = spot[:,:3]/s
     spot= np.round(spot).astype('int')
@@ -37,5 +37,5 @@ for f in fx:
         if idx>0:
             df.loc[idx,'count']= df.loc[idx,'count']+1
     count.loc[:,r]=df.to_numpy()
-count.to_csv(out_dir+'count.csv')
+count.to_csv(out_dir+'/count.csv')
 

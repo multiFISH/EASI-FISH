@@ -36,7 +36,7 @@ if channel == 'c3':            # bleed-through correction for channel 546
     print('DAPI background:',bg_dapi)
     print('c3 background:',bg_img)
     
-df = pd.DataFrame(data=np.empty([len(roi),4]), columns=['roi','mean_intensity'], dtype=object)
+df = pd.DataFrame(data=np.empty([len(roi)-1,4]), columns=['roi','mean_intensity'], dtype=object)
 lb_stat = regionprops(lb,intensity_image=img)
 for i in range(0,len(roi)-1):
     df.loc[i, 'roi'] = lb_stat[i].label
