@@ -33,10 +33,12 @@ We developed [BigStream](https://github.com/GFleishman/bigstream) for distribute
     `pip install bigstream`
 
 ### Segmentation #
-[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. 
+[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model and training data](https://figshare.com/s/150f88617bf08a2c9005) is provided for testing. 
 
 `Starfinity`  can be installed with  `pip`:\
     `pip install git+https://github.com/mpicbg-csbd/stardist@refinement` 
+
+
 
 ### Spot detection #
 We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, Airlocalize ([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection in large image datasets.  
