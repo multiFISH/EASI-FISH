@@ -39,7 +39,7 @@ We developed [BigStream](https://github.com/GFleishman/bigstream) for distribute
     `pip install git+https://github.com/mpicbg-csbd/stardist@refinement` 
 
 ### Spot detection #
-We developed hAirlocalize, a modification based on the matlab spot detection algorithm, Airlocalize([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551) to allow for distributed spot detection in large datasets.  
+We developed hAirlocalize, a modification based on the matlab spot detection algorithm, Airlocalize ([Lionnet et al., 2011])(https://www.nature.com/articles/nmeth.1551) to allow for distributed spot detection in large datasets.  
 
 To use `hAirlocalize`:
 
