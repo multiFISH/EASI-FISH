@@ -27,21 +27,21 @@ The previously developed Apache Spark-based high-performance computing pipeline 
 
 
 ### Registration #
-We developed [BigStream](https://github.com/GFleishman/stream) for distributed alignment multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (Yushkevich, 2016) on each block. 
+We developed [BigStream](https://github.com/GFleishman/bigstream) for distributed alignment multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (Yushkevich, 2016) on each block. 
 
 `bigstream` can be installed with `pip`:\
     `pip install bigstream`
 
 ### Segmentation #
-[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. 
+[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model and training data](https://figshare.com/s/150f88617bf08a2c9005) is provided for testing. 
 
 `Starfinity`  can be installed with  `pip`:\
     `pip install git+https://github.com/mpicbg-csbd/stardist@refinement` 
 
-### Spot detection #
-We developed hAirlocalize, a modification based on the matlab spot detection algorithm, [Airlocalize]() (Lionnet et al., 2011) to allow for distributed spot detection in large datasets.  
 
-To use `hAirlocalize`:
+
+### Spot detection #
+We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, Airlocalize ([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection in large image datasets.  
 
 ## Additional information #
 
@@ -49,5 +49,5 @@ To use `hAirlocalize`:
 Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, filter ROIs, dense spots analysis, intensity measurements, lipofuscin subtraction are included in the repository. 
 
 ### Example data #
-Example [datasets]() are provided for testing.  
+Example datasets ([round 3](https://figshare.com/s/67c3b489297d8ec9fe6e), [round 5](https://figshare.com/s/834a118dfddb9366efee)) are provided for testing.  
 
