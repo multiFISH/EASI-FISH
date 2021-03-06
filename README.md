@@ -9,45 +9,47 @@ Table of Contents
       * [Segmentation](#segmentation)
       * [Spot detection](#spot-detection)
    * [Additional information](#additional-information)
+      * [Visualization] (visualization)
       * [Post processing](#post-processing)  
       * [Example data](#example-data)
 
 ## Description #
-This pipeline is used to analyze large-scale, multi-round, high-resolution image data acquired using EASI-FISH (Expansion-Assisted Iterative Fluorescence *In Situ* Hybridization). It includes automated image stitching, distributed multi-round image registration, cell segmentation, and distributed spot detection. We also envision this pipeline being adapted for analysis of other image-based spatial transcriptomic data. 
+This workflow is used to analyze large-scale, multi-round, high-resolution image data acquired using EASI-FISH (Expansion-Assisted Iterative Fluorescence *In Situ* Hybridization). It takes advantage of the [n5](https://github.com/saalfeldlab/n5) filesystem to allow for rapid and parallel data reading and writing. It performs automated image stitching, distributed and highly accurate multi-round image registration, 3D cell segmentation, and distributed spot detection. We also envision this workflow being adapted for analysis of other image-based spatial transcriptomic data. 
 ![](/resources/Pipeline.gif)
-The pipeline takes advantage of the [n5](https://github.com/saalfeldlab/n5) filesystem to allow for rapid data reading and writing. Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) allows for visualization of large image data visualization on a laptop.  
-
+ 
 ## Pipeline #
-An end-to-end analysis [pipeline](https://github.com/JaneliaSciComp/multifish) that takes `czi` image files acquired from Zeiss Z.1 lightsheet microscope and output the transcript spot counts that can be readily used for cell type identification.  
+We build a self-contained, highly flexible, and platform agnostic computational [pipeline](https://github.com/JaneliaSciComp/multifish), which supports turnkey EASI-FISH data analysis on local machines and the LSF compute cluster. The pipeline is freely available, open source, and modular. It can rapidly process large datasets greater than 10 TB in size with minimal manual intervention. The pipeline can be used to analyze EASI-FISH dataset end-to-end. It takes `czi` image files acquired from Zeiss Z.1 lightsheet microscope as input and outputs 1) processed image data at different scales and 2) transcript counts that can be readily used for cell type identification. The pipeline also provides options to run individual analysis modules, such as image stitching or registration. 
 
 ## Modules #
 
 ### Stitching #
-The previously developed Apache Spark-based high-performance computing pipeline (Gao et al., 2019) was implemented for image stitching. For details on running on local machine, computing cluster or public platforms, please visit  [stitching-spark](https://github.com/saalfeldlab/stitching-spark). 
+For imaging large volumes, multiple sub-volumes (tiles) are sequentially acquired, followed by computational stitching into a single large image. We used an Apache Spark-based high-performance stitching pipeline ([Gao et al., 2019](https://science.sciencemag.org/content/363/6424/eaau8302.long)). The pipeline automatically performs a flat-field correction for each tile to account for intensity variations across the lightsheet. It then derives the globally optimal translation for each tile that minimizes the sum of square distances to competing optimal pairwise translations estimated by phase-correlation ([Preibisch et al., 2009](https://academic.oup.com/bioinformatics/article/25/11/1463/332497)). The stitching module can be executed with the EASI-FISH pipeline (see above). For additional details, please see [stitching-spark](https://github.com/saalfeldlab/stitching-spark). 
 
 
 ### Registration #
-We developed [BigStream](https://github.com/GFleishman/bigstream) for distributed alignment multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm (Fischler and Bolles, 1981). The image volume is then divided into overlapping blocks and another round of feature-based affine transformation was performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) (Yushkevich, 2016) on each block. 
+We developed [BigStream](https://github.com/GFleishman/bigstream) for robust and fully automated non-rigid registration of multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm. The image volume is then divided into overlapping blocks and another round of feature-based affine transformation is performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) ([Yushkevich, 2016](https://github.com/pyushkevich/greedy)) on each block. Bigstream can be executed as part of the EASI-FISH pipeline. It also can be installed and used seperately. 
 
 `bigstream` can be installed with `pip`:\
     `pip install bigstream`
 
 ### Segmentation #
-[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model and training data](https://figshare.com/s/150f88617bf08a2c9005) is provided for testing. 
+[Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model](https://doi.org/10.25378/janelia.13624268) was trained to predict cell body shapes from DAPI-stained RNA images and is provided for testing. Starfinity can be executed as part of the EASI-FISH pipeline. It can also be installed and used independently. 
 
-`Starfinity`  can be installed with  `pip`:\
+`Starfinity`  can be installed with  `pip`:
     `pip install git+https://github.com/mpicbg-csbd/stardist@refinement` 
-
-
+For training new Starfinity models, the [augmend](https://github.com/stardist/augmend) and [gputools](https://github.com/maweigert/gputools)(optional) packages need to be installed.
 
 ### Spot detection #
-We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, Airlocalize ([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection in large image datasets.  
+We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, [Airlocalize](http://www.timotheelionnet.net/software/)([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection on full-resolution large image datasets. hAirlocalize can be executed independently or as part of the EASI-FISH pipeline (see above). For independent execution, we recommend working with the n5 filesystem due to large file size.
 
 ## Additional information #
 
+### Visualization #
+Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) can be used for large image dataset visualization on local machines. The workflow also outputs processed intermediate image data in the stitching (`n5`), registration (`n5`) and segmentation (`tif`) steps. For inspection of spot extracted with hAirlocalize, we recommend the python-based multi-dimensional image viewer, [napari] (https://napari.org/). An example [notebook]() is provided. 
+
 ### Post processing
-Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, filter ROIs, dense spots analysis, intensity measurements, lipofuscin subtraction are included in the repository. 
+Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, cell morphological measurements, dense spot analysis, FISH signal intensity measurements, lipofuscin subtraction are included in this repository. 
 
 ### Example data #
-Example datasets ([round 3](https://figshare.com/s/67c3b489297d8ec9fe6e), [round 5](https://figshare.com/s/834a118dfddb9366efee)) are provided for testing.  
+EASI-FISH [example datasets](https://doi.org/10.25378/janelia.c.5276708) are provided for software testing. For instructions on performing a demo run with the example data using the end-to-end analysis pipeline, see [here](https://github.com/JaneliaSciComp/multifish). 
 
