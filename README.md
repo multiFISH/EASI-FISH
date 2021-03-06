@@ -30,14 +30,16 @@ For imaging large volumes, multiple sub-volumes (tiles) are sequentially acquire
 We developed [BigStream](https://github.com/GFleishman/bigstream) for robust and fully automated non-rigid registration of multi-round FISH data. BigStream first performs fast global affine transformation using a feature-based random sample consensus (RANSAC) algorithm. The image volume is then divided into overlapping blocks and another round of feature-based affine transformation is performed, followed by a fast 3D deformable registration [greedypy](https://github.com/GFleishman/greedypy) ([Yushkevich, 2016](https://github.com/pyushkevich/greedy)) on each block. Bigstream can be executed as part of the EASI-FISH pipeline. It also can be installed and used seperately. 
 
 `bigstream` can be installed with `pip`:\
-         `pip install bigstream`
-
+```
+         pip install bigstream
+```
 ### Segmentation #
 [Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model](https://doi.org/10.25378/janelia.13624268) was trained to predict cell body shapes from DAPI-stained RNA images and is provided for testing. Starfinity can be executed as part of the EASI-FISH pipeline. It can also be installed and used independently. 
 
 `Starfinity`  can be installed with  `pip`:\
-         `pip install git+https://github.com/mpicbg-csbd/stardist@refinement` \
-
+```
+         pip install git+https://github.com/mpicbg-csbd/stardist@refinement
+```
 For training new Starfinity models, the [augmend](https://github.com/stardist/augmend) and [gputools](https://github.com/maweigert/gputools)(optional) packages need to be installed.
 
 ### Spot detection #
