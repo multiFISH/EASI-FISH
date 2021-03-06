@@ -9,7 +9,7 @@ Table of Contents
       * [Segmentation](#segmentation)
       * [Spot detection](#spot-detection)
    * [Additional information](#additional-information)
-      * [Visualization] (visualization)
+      * [Visualization](#visualization)
       * [Post processing](#post-processing)  
       * [Example data](#example-data)
 
