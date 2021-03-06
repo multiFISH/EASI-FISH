@@ -31,14 +31,14 @@ We developed [BigStream](https://github.com/GFleishman/bigstream) for robust and
 
 `bigstream` can be installed with `pip`:\
 ```
-         pip install bigstream
+   pip install bigstream
 ```
 ### Segmentation #
 [Starfinity](https://github.com/mpicbg-csbd/stardist/tree/refinement) is a deep learning-based automatic 3D segmentation software. Starfinity is an extension of [Stardist](https://github.com/mpicbg-csbd/stardist), an earlier cell detection approach (Schmidt et al., 2018; Weigert et al., 2020) and is based on the dense prediction of cell border distances and their subsequent aggregation into pixel affinities. A starfinity [model](https://doi.org/10.25378/janelia.13624268) was trained to predict cell body shapes from DAPI-stained RNA images and is provided for testing. Starfinity can be executed as part of the EASI-FISH pipeline. It can also be installed and used independently. 
 
 `Starfinity`  can be installed with  `pip`:\
 ```
-         pip install git+https://github.com/mpicbg-csbd/stardist@refinement
+   pip install git+https://github.com/mpicbg-csbd/stardist@refinement
 ```
 For training new Starfinity models, the [augmend](https://github.com/stardist/augmend) and [gputools](https://github.com/maweigert/gputools)(optional) packages need to be installed.
 
