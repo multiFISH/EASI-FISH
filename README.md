@@ -48,7 +48,7 @@ We developed hAirlocalize, a distributed spot detection method based on the MATL
 ## Additional information #
 
 ### Visualization #
-Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) can be used for large image dataset visualization on local machines. The workflow also outputs processed intermediate image data in the stitching (`n5`), registration (`n5`) and segmentation (`tif`) steps. For inspection of spot extracted with hAirlocalize, we recommend the python-based multi-dimensional image viewer, [napari](https://napari.org/). An example [notebook]() is provided. 
+Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) can be used for large image dataset visualization on local machines. The workflow also outputs processed intermediate image data in the stitching (`n5`), registration (`n5`) and segmentation (`tif`) steps. For inspection of spot extracted with hAirlocalize, we recommend the python-based multi-dimensional image viewer, [napari](https://napari.org/). An example [notebook](https://github.com/multiFISH/EASI-FISH/tree/master/visualization) is provided. 
 
 ### Post processing
 Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, cell morphological measurements, dense spot analysis, FISH signal intensity measurements, lipofuscin subtraction are included in this repository. 
