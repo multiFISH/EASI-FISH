@@ -65,17 +65,14 @@ print(roi)
 
 # Optional: 
 # to remove the last few z-stacks (z>650) due to high background in the red channel.
-
 mask[650:,:,:]=0
 
 
 # Get list of ROIs that are fully or partially outside the mask 
-
 list=np.unique(lb[mask==0])
 print("# of cells rejected:", len(list))
 
 # ####Get metadata for ROI: ID, centroid position, size, distance to (0,0,0) and aspect ratio####
-
 df = pd.DataFrame(np.empty([roi, 0]))
 lb_stat = regionprops(lb)
 for i in range(0,roi): 
