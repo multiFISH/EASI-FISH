@@ -88,4 +88,4 @@ for i in df_count.columns:
     for j in density[density>0.01].index:
         df_cutoff.loc[j,i]=df_count.loc[j,i].copy()
         
-df_cutoff.to_csv(output_dir)
+df_cutoff.to_csv(output_dir+'/count_with_cutoff.csv')
