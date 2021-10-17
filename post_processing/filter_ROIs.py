@@ -76,15 +76,15 @@ print("# of cells rejected:", len(list))
 df = pd.DataFrame(np.empty([roi, 0]))
 lb_stat = regionprops(lb)
 for i in range(0,roi): 
-    df.loc[df.index[i], 'roi'] = i+1
+    df.loc[df.index[i], 'roi'] = lb_stat[i].label
     df.loc[df.index[i], 'z'] = lb_stat[i].centroid[0]
     df.loc[df.index[i], 'y'] = lb_stat[i].centroid[1]
     df.loc[df.index[i], 'x'] = lb_stat[i].centroid[2]
     df.loc[df.index[i], 'area'] = lb_stat[i].area
-    df.loc[df.index[i], 'Distance'] = distance.euclidean(lb_stat[i].centroid,[0,0,0])
     df.loc[df.index[i], 'minor_axis_length'] = lb_stat[i].minor_axis_length
     df.loc[df.index[i], 'major_axis_length'] = lb_stat[i].major_axis_length
-    df.loc[df.index[i], 'aspect_ratio'] = lb_stat[i].minor_axis_length/lb_stat[i].major_axis_length
+    df.loc[df.index[i], 'aspect_ratio'] = lb_stat[i].major_axis_length/lb_stat[i].minor_axis_length
+    df.loc[df.index[i], 'solidity']=lb_stat[i].solidity
 
 ####Filter out ROIs that 1) not in mask; 2) have high background in channel 546
 
