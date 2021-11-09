@@ -1,5 +1,5 @@
 # EASI-FISH analysis toolbox #
-(Active EASI-FISH [pipeline](https://github.com/JaneliaSciComp/multifish) updates) 
+See [here](https://github.com/JaneliaSciComp/multifish) for active EASI-FISH pipeline updates. 
 ## Table of Contents #
    * [Description](#description)
    * [Pipeline](#pipeline)
