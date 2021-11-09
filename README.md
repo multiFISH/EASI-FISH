@@ -1,4 +1,5 @@
 # EASI-FISH analysis toolbox
+Click [here](https://github.com/JaneliaSciComp/multifish)for active update of EASI-FISH pipeline. 
 Table of Contents
 =================
    * [Description](#description)
@@ -48,11 +49,11 @@ We developed hAirlocalize, a distributed spot detection method based on the MATL
 ## Additional information #
 
 ### Visualization #
-Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) can be used for large image dataset visualization on local machines. The workflow also outputs processed intermediate image data in the stitching (`n5`), registration (`n5`) and segmentation (`tif`) steps. For inspection of spot extracted with hAirlocalize, we recommend the python-based multi-dimensional image viewer, [napari](https://napari.org/). An example [notebook](https://github.com/multiFISH/EASI-FISH/tree/master/visualization) is provided. 
+Fiji-based [n5-viewer](https://github.com/saalfeldlab/n5-viewer) can be used for large image dataset visualization on local machines. The workflow also outputs processed intermediate image data in the stitching (`n5`), registration (`n5`) and segmentation (`tif`) steps. For inspection of spot extracted with hAirlocalize, we recommend the python-based multi-dimensional image viewer, [napari](https://napari.org/). An example [notebook](https://github.com/multiFISH/EASI-FISH/tree/master/data_visualization) is provided. 
 
 ### Post processing
-Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/post_processing), such as assign spots, cell morphological measurements, dense spot analysis, FISH signal intensity measurements, lipofuscin subtraction are included in this repository. 
+Code used for [Post processing](https://github.com/multiFISH/EASI-FISH/tree/master/data_processing), such as assign spots, cell morphological measurements, dense spot analysis, FISH signal intensity measurements, lipofuscin subtraction are included in this repository. 
 
 ### Example data #
-EASI-FISH [example datasets](https://doi.org/10.25378/janelia.c.5276708) are provided for software testing. For instructions on performing a demo run with the example data using the end-to-end analysis pipeline, see [here](https://github.com/JaneliaSciComp/multifish). 
+EASI-FISH [example datasets](https://doi.org/10.25378/janelia.c.5276708.v1) are provided for software testing. For instructions on performing a demo run with the example data using the end-to-end analysis pipeline, see [here](https://github.com/JaneliaSciComp/multifish). 
 
