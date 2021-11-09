@@ -43,7 +43,7 @@ We developed [BigStream](https://github.com/GFleishman/bigstream) for robust and
 For training new Starfinity models, the [augmend](https://github.com/stardist/augmend) and [gputools](https://github.com/maweigert/gputools)(optional) packages need to be installed.
 
 ### Spot detection #
-We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, [Airlocalize](http://www.timotheelionnet.net/software/)([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection on full-resolution large image datasets. hAirlocalize can be executed independently or as part of the EASI-FISH pipeline (see above). For independent execution, we recommend working with the n5 filesystem due to large file size.
+We developed hAirlocalize, a distributed spot detection method based on the MATLAB spot detection algorithm, [Airlocalize](https://github.com/timotheelionnet/AIRLOCALIZE)([Lionnet et al., 2011](https://www.nature.com/articles/nmeth.1551)) to allow rapid spot detection on full-resolution large image datasets. hAirlocalize can be executed independently or as part of the EASI-FISH pipeline (see above). For independent execution, we recommend working with the n5 filesystem due to large file size.
 
 ## Additional information #
 
