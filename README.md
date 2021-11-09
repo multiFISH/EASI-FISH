@@ -1,4 +1,5 @@
-# EASI-FISH analysis toolbox #
+# EASI-FISH analysis toolbox # 
+[![DOI](https://zenodo.org/badge/319982517.svg)](https://zenodo.org/badge/latestdoi/319982517)
 See [here](https://github.com/JaneliaSciComp/multifish) for active EASI-FISH pipeline updates. 
 ## Table of Contents #
    * [Description](#description)
