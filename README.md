@@ -3,6 +3,7 @@
 
 Expansion-Assisted Iterative-FISH defines lateral hypothalamus spatio-molecular organization
 Yuhan Wang, Mark Eddison, Greg Fleishman, Martin Weigert, Shengjin Xu, Fredrick E. Henry, Tim Wang, Andrew L. Lemire, Uwe Schmidt, Hui Yang, Konrad Rokicki, Cristian Goina, Karel Svoboda, Eugene W. Myers, Stephan Saalfeld, Wyatt Korff, Scott M. Sternson, Paul W. Tillberg
+
 bioRxiv 2021.03.08.434304; doi: https://doi.org/10.1101/2021.03.08.434304
 
 See [here](https://github.com/JaneliaSciComp/multifish) for active EASI-FISH pipeline updates. 
