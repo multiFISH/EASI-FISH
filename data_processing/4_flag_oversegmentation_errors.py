@@ -19,7 +19,7 @@
 # 
 # #3, #4, #5 are for eliminating the false detections  
 
-import os, sys,z5py
+import os, sys
 import numpy as np
 import pandas as pd
 from glob import glob 
