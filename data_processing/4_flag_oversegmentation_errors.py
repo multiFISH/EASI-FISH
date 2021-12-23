@@ -32,19 +32,11 @@ from skimage.measure import regionprops
 if __name__ == '__main__':
     count_dir      = sys.argv[1]  # directory to spot count/neuron (csv format)
     roi_dir        = sys.argv[2]  # directory to neuron metadata (csv format)
-    GeneName_dir   = sys.argv[3]  # directory to gene list metadata (csv format) 
-    lb_dir         = sys.argv[4]  # directory to segmentation mask (tif format)
-    out_dir        = sys.argv[5]  # directory to save output
+    lb_dir         = sys.argv[3]  # directory to segmentation mask (tif format)
+    out_dir        = sys.argv[4]  # directory to save output
 
-df_cutoff=pd.read_csv(count_dir,sep=',', index_col=0)
+df=pd.read_csv(count_dir,sep=',', index_col=0)
 roi=pd.read_csv(roi_dir,sep=',',index_col=0)
-GeneName=pd.read_csv(GeneName_dir,sep=',', index_col=0)
-
-###change column names to gene names from the lookup table 'GeneName'###
-df=df_cutoff.copy()
-for x in df.columns: 
-    df = df.rename(columns={x:GeneName.loc[x,'Gene']})
-
 
 ###Get correlation matrix
 corr_raw =df.T.corr()
