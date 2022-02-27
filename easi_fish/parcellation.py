@@ -47,6 +47,37 @@ def relative_expression(roi, spotcount, gene1, gene2, radius):
                 roi.iloc[i,ind2]=-1
     return roi
 
+def spatial_enrichment(roi, spotcount, gene, radius): 
+    """
+    This is to compute the spatial enrichment of a gene. 
+    
+    roi: pandas dataframe containing neuron id and their x,y,z positions (in the first 3 columns)
+    spotcount: pandas dataframe containing neuron id and their gene expression (spot count)
+    gene: gene to compute the spatial expression
+    radius: the neighborhood radius used to compute the spatial gene expression 
+
+    """   
+	gene=str(gene)
+	roi.loc[:, 'cluster']='N'
+	roi.loc[spotcount[spotcount[gene1]>50].index, 'cluster']=gene
+
+	X=roi.to_numpy()[:,:3] 
+	neuron=spatial.KDTree(X)
+	neighbors=neuron.query_ball_point(X,radius)
+	roi['cluster']=roi['cluster'].astype(str)
+	roi['fraction_%s' % (str(gene))]=0
+
+	ind1=roi.columns.get_loc('cluster')
+	ind2=roi.columns.get_loc('fraction_%s' % (str(gene)))
+	for i in range(0,len(neighbors)):
+		x=[]
+		for j in neighbors[i]:
+			x=np.append(x, roi.iloc[j,ind1])
+		a,b=np.unique(x,return_counts=True)
+		if np.any(a==gene1):
+			c=b[np.argwhere(a==gene)]
+			roi.iloc[i,ind2]=float(c/len(x))
+    return roi
 
 def plot_relative_expression(roi, column, num_z, invert_x=False, invert_y=False, invert_z=False):
     """
