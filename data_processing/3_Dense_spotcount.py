@@ -5,7 +5,7 @@
 #    Spot count > cutoff: use spot count converted based on total fluorescence intensity; 
 #    Spot count < cutoff: use spot count from Airlocalize
 
-import os, sys,z5py
+import os, sys
 import numpy as np
 import pandas as pd
 from glob import glob 
