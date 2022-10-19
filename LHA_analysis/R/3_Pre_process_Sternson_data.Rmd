@@ -1,0 +1,46 @@
+---
+title: "Pre_process_Sternson_dataset"
+output: html_notebook
+
+Seurat version: 3.1.3
+chunk_output_type: inline
+Note: This notebook is used to filter out non-neurons. 
+---
+```{r}
+library(Seurat)
+```
+#Load files
+```{r}
+lha.data.subtracted=read.table("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/merged_counts_subtracted.txt",sep="",as.is=T,row.names=1, header= TRUE)
+lha.meta <- read.table("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/merged_sample_info.txt",sep="\t",as.is=F,row.names=1, header=TRUE)
+subtracted.lha.ids = colnames(lha.data.subtracted)
+lha.meta.subtracted = lha.meta[subtracted.lha.ids,]
+LHA_Trace <- CreateSeuratObject(lha.data.subtracted, min.cells = 5, min.features = 2,project = "LHA_SCRB")
+LHA_Trace
+```
+# Normalize data, run PCA and clustering
+```{r}
+LHA_Trace<- PercentageFeatureSet(LHA_Trace,pattern = "^MT-", col.name = "percent.mt") %>% NormalizeData() %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% ScaleData(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+RunUMAP(dims = 1:30) %>% FindClusters(resolution=0.5)
+
+```
+# Display the umap
+```{r}
+DimPlot(LHA_Trace,reduction='umap',label=TRUE)
+```
+# Determine the Silhouette score for each cluster
+```{r}
+SilhouetteRainCloudPlot(CalculateSilhouette(LHA_Trace, dims = 1:50))
+```
+# Look at non-neuronal markers to filter out non-neurons
+```{r}
+FeaturePlot(LHA_Trace,features=c("Aqp4", "Olig2", "Opalin","Pdgfra","Ctss","Flt1","Map1b","Snap25", "Syp","Tubb3", "Slc17a6",'Slc32a1'), cols=c("lightgray","blue"),ncol=3)
+```
+# Remove the cluster that has strong Opalin expression 
+```{r}
+LHA_Trace=subset(LHA_Trace, ident='5',invert=TRUE)
+```
+#Save the Seurat object for further analysis in the next step
+```{r}
+save(LHA_Trace,file="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_sternson_2020Nov.Robj")
+```

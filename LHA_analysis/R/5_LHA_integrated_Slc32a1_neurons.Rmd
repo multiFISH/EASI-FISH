@@ -1,0 +1,33 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+###Continue from LHA_integrated_neurons_only_2020Nov.Rmd
+```{r}
+DefaultAssay(lha.integrated_neurons) <- "RNA"
+Slc32a1=subset(lha.integrated_neurons, subset=Slc32a1>Slc17a6)
+```
+
+```{r}
+DimPlot(Slc32a1, reduction = "tsne",  group.by = "ident", label=TRUE)
+```
+
+
+
+```{r}
+DefaultAssay(Slc32a1) <- "integrated"
+Slc32a1=ScaleData(Slc32a1) %>% RunPCA(verbose = FALSE) %>% RunTSNE(seed.use=6,dims = 1:30,perplexity=60) 
+Slc32a1=FindNeighbors(Slc32a1, dims=1:30,k.param=60)
+Slc32a1 <- FindClusters(Slc32a1, resolution = 1.2)
+```
+
+
+```{r,fig.height=3,fig.width=4}
+DimPlot(Slc32a1, reduction = "tsne",  group.by = "ident", label=FALSE,pt=1)
+```
+
+```{r}
+save(Slc32a1.integrated,file='/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_Slc32a1_2020Nov.Robj')
+```
+
+

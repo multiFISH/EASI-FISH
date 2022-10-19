@@ -1,0 +1,117 @@
+---
+title: "scRNAseq analysis"
+Name: Yuhan Wang
+output: html_notebook
+Date:April-23-2021
+---
+
+###Load for packages
+```{r}
+library(scclusteval)
+library(Seurat)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(cowplot)
+library(scclusteval)
+library(clustree)
+```
+
+#Load data
+```{r}
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_Slc17a6_2020Nov.Robj')
+```
+
+#Determine which ones are the stable clusters with bootstrap analysis
+```{r}
+DefaultAssay(Slc17a6) <- "integrated"
+Slc17a6$orig.ident=Idents(Slc17a6)
+
+a=list()
+b=list()
+
+x=1
+repeat {
+Slc17a6_sub=RandomSubsetData(Slc17a6, rate=0.8)
+Slc17a6_sub<-ScaleData(Slc17a6_sub)%>% RunPCA(verbose = FALSE)%>% FindNeighbors(dims=1:30,k.param=20) %>% FindClusters(resolution = 0.6)
+
+a=append(a,list(Slc17a6_sub$orig.ident))
+b=append(b,list(Slc17a6_sub@active.ident))
+
+rm(Slc17a6_sub)
+x=x+1
+if (x == 101){
+break
+}
+}
+
+# Heatmap to determine which clusters are confusing
+PairWiseJaccardSetsHeatmap(Slc17a6_sub$orig.ident,Slc17a6_sub@active.ident,best_match=T)
+
+# Plot the Jaccard index distribution of clusters
+JaccardRainCloudPlot(a,b)+ geom_hline(yintercept = c(0.75), linetype = 2) 
+```
+
+# Silhouette scores
+```{r}
+SilhouetteRainCloudPlot(CalculateSilhouette(Slc17a6, dims = 1:30)) + geom_hline(yintercept = c(0),linetype = 2)
+```
+
+#SC3 stability index
+```{r}
+DefaultAssay(Slc17a6) <- "integrated"
+n.dims <- 20
+resolutions <- seq(0, 1, 0.2)
+Slc17a6 <- FindClusters(Slc17a6, resolution = resolutions)
+clustree(Slc17a6, node_colour = "sc3_stability")
+```
+
+
+```{r}
+DimPlot(Slc17a6, reduction = "tsne",  group.by = "orig.ident", label=TRUE,pt=1)
+```
+
+
+```{r}
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_Slc32a1_2020Nov.Robj')
+```
+
+```{r}
+DimPlot(Slc32a1.integrated, reduction = "tsne",  label=TRUE,pt=1)
+```
+
+
+#Determine which ones are the stable clusters
+```{r}
+DefaultAssay(Slc32a1.integrated) <- "integrated"
+Slc32a1.integrated$orig.ident=Idents(Slc32a1.integrated)
+
+a=list()
+b=list()
+
+x=1
+repeat {
+Slc32a1_sub=RandomSubsetData(Slc32a1.integrated, rate=0.8)
+Slc32a1_sub<-ScaleData(Slc32a1_sub)%>% RunPCA(verbose = FALSE)%>% FindNeighbors(dims=1:30,k.param=60) %>% FindClusters(resolution = 1.2)
+
+a=append(a,list(Slc32a1_sub$orig.ident))
+b=append(b,list(Slc32a1_sub@active.ident))
+
+rm(Slc32a1_sub)
+x=x+1
+if (x == 101){
+break
+}
+}
+
+JaccardRainCloudPlot(a,b)+ geom_hline(yintercept = c(0.75), linetype = 2) 
+```
+```{r}
+SilhouetteRainCloudPlot(CalculateSilhouette(Slc32a1.integrated, dims = 1:30)) + geom_hline(yintercept = c(0),linetype = 2)
+```
+
+
+```{r}
+save(Slc32a1.integrated,file='/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_Slc32a1_2020Nov.Robj')
+```
+

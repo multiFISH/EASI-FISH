@@ -1,0 +1,41 @@
+---
+title: "Navigating the LHA scRNAseq data"
+Date: 10-01-2021
+output: html_notebook
+---
+#Make sure Seurat has been installed
+```{r}
+library(Seurat)
+```
+#Load your project here (You should see it under Datasets)
+```{r}
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_neurons_2021Sep_final.Robj')
+```
+
+#Visualize the cell types (I labled excitatory clusters from e1-e17 and inhibitory clusters i1-i17)
+```{r}
+DimPlot(lha.integrated_neurons, reduction = "tsne", raster=TRUE, label=TRUE,pt.size=1)
+```
+# You can look at the 3 datasets seperately: LHA_10: Jackson lab dataset; LHA_SCRB: Sternson lab dataset; LHA_Dropseq: Stuber lab dataset
+```{r,fig.height=2, fig.width=6}
+Idents(lha.integrated_neurons)<-lha.integrated_neurons$merge_identity
+DimPlot(lha.integrated_neurons, reduction = "tsne",  group.by = "merge_identity", split.by = "scRNAseq_sources", label=FALSE)
+```
+# You can also look at genes of your interest
+```{r,fig.height=3, fig.width=5}
+DefaultAssay(lha.integrated_neurons) <- "RNA"
+FeaturePlot(lha.integrated_neurons,reduction = "tsne",  features=c('Pax6','Hcrt','Pdyn','Pitx2'), ncol=3)
+```
+#To look at  the averaged expression across different clusters by dot plot or violin plot
+```{r,fig.width=5,fig.height=7}
+DotPlot(lha.integrated_neurons, features = c('Npy1r','Npy2r','Npy5r','Adra1b','Hrh1','Hrh3',
+'Htr1b','Htr2c','Mc4r'))
+```
+
+```{}
+VlnPlot(lha.integrated_neurons, features = c('Npy1r','Npy2r','Npy5r','Adra1b','Hrh1','Hrh3',
+'Htr1b','Htr2c','Mc4r'))
+```
+
+
+

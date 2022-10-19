@@ -1,0 +1,121 @@
+---
+title: "LHA_scRNAseq_integration_2020"
+output: html_notebook
+
+Seurat version: 3.1.3
+chunk_output_type: inline
+
+---
+```{r}
+library(Seurat)
+```
+ 
+
+#Read into files
+
+
+
+
+# Initialize new Seurat object with the new raw data aftr empty well subtraction.
+# Keep all genes expressed in >= 3 cells (~0.1% of the data). Keep all cells with at least 200 detected genes
+
+
+```{r}
+Stuber_1=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744476_MLB003_AJP1-N701_merged_GE_clean.bam.dge_1920.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_2=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744477_MLB003_AKP1-N702_merged_GE_clean.bam.dge_2280.txt.gz")
+
+Stuber_3=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744478_MLB003_ALP1-N703_merged_GE_clean.bam.dge_2640.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_4=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744479_MLB004_ANP1-N701_merged_GE_clean.bam.dge_3750.txt.gz")
+
+Stuber_5=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744480_MLB003_AOP1-N704_merged_GE_clean.bam.dge_2160.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_6=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744481_MLB003_APP1-N705_merged_GE_clean.bam.dge_2580.txt.gz")
+
+Stuber_7=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744482_MLB004_AQP1-N702_merged_GE_clean.bam.dge_3360.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_8=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744483_MLB003_ASP1-N706_merged_GE_clean.bam.dge_1770.txt.gz")
+
+Stuber_9=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744484_MLB004_AZP1-N703_merged_GE_clean.bam.dge_3360.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_10=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744485_MLB004_BAP1-N704_merged_GE_clean.bam.dge_2310.txt.gz")
+
+Stuber_11=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744486_MLB004_BBP1-N705_merged_GE_clean.bam.dge_0300.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_12=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Stuber_scRNAseq/GSE130597_RAW/GSM3744487_MLB004_BCP1-N706_merged_GE_clean.bam.dge_1020.txt.gz")
+
+Stuber_13=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744488_MLB003_BDP1-N707_merged_GE_clean.bam.dge_0690.txt.gz",header = TRUE, row.names=1)
+
+#Stuber_14=read.delim("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Combined_Analysis_Jackson_Lab/Stuber_scRNAseq/GSE130597_RAW/GSM3744489_MLB003_BEP1-N708_merged_GE_clean.bam.dge_0270.txt.gz")
+
+```
+
+
+```{r}
+LHA_Stuber_1=CreateSeuratObject(Stuber_1,min.cells = 5, min.features = 2, project = "LHA_Dropseq")
+LHA_Stuber_3=CreateSeuratObject(Stuber_3, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+LHA_Stuber_5=CreateSeuratObject(Stuber_5, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+LHA_Stuber_7=CreateSeuratObject(Stuber_7, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+LHA_Stuber_9=CreateSeuratObject(Stuber_9, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+LHA_Stuber_11=CreateSeuratObject(Stuber_11, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+LHA_Stuber_13=CreateSeuratObject(Stuber_13, min.cells = 5, min.features = 2,project = "LHA_Dropseq")
+
+```
+
+```{r}
+LHA_Stuber_combined <- merge(x=LHA_Stuber_1,y=c(LHA_Stuber_3,LHA_Stuber_5,LHA_Stuber_7,LHA_Stuber_9,LHA_Stuber_11,LHA_Stuber_13),add.cell.ids=c("LHA_Stuber_1","LHA_Stuber_3","LHA_Stuber_5","LHA_Stuber_7","LHA_Stuber_9","LHA_Stuber_11","LHA_Stuber_13"), project = "LHA_Dropseq")
+```
+
+```{r}
+LHA_Stuber_combined<- PercentageFeatureSet(LHA_Stuber_combined,pattern = "^MT-", col.name = "percent.mt") %>% NormalizeData() %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% ScaleData(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+RunUMAP(dims = 1:30) %>% FindClusters(resolution=0.5)
+
+```
+
+```{r include=FALSE}
+#LHA_Stuber_combined<- PercentageFeatureSet(LHA_Stuber_combined,pattern = "^MT-", col.name = "percent.mt") %>% 
+#    SCTransform(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+#    RunUMAP(dims = 1:30) %>% FindClusters(resolution=0.1)
+```
+```{r}
+LHA_Stuber_combined<- PercentageFeatureSet(LHA_Stuber_combined,pattern = "^MT-", col.name = "percent.mt") %>% NormalizeData() %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% ScaleData(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+RunUMAP(dims = 1:30) %>% FindClusters(resolution=0.5)
+```
+
+
+```{r}
+LHA_Stuber_combined=FindClusters(LHA_Stuber_combined,resolution=0.2)
+DimPlot(LHA_Stuber_combined,reduction='umap',label=TRUE)
+```
+
+```{r}
+SilhouetteRainCloudPlot(CalculateSilhouette(LHA_Stuber_combined, dims = 1:10))
+```
+
+```{r}
+FeaturePlot(LHA_Stuber_combined ,features=c("Aqp4", "Olig2", "Opalin","Pdgfra","Ctss","Flt1","Map1b","Snap25", "Syp","Tubb3", "Slc17a6",'Slc32a1'), cols=c("lightgray","blue"),ncol=3)
+```
+```{r}
+#lha_int.neurons[["percent.mt"]] <- PercentageFeatureSet(lha_int.neurons, pattern = "^MT-")
+VlnPlot(LHA_Stuber_combined_neuron, features = c("nFeature_RNA", "nCount_RNA"))
+```
+```{r}
+LHA_Stuber_combined_neuron <- subset(LHA_Stuber_combined_neuron, subset = nFeature_RNA > 500 & nFeature_RNA < 7500 & nCount_RNA < 2e+05)
+VlnPlot(LHA_Stuber_combined_neuron, features = c("nFeature_RNA", "nCount_RNA"))
+```
+
+```{r}
+DimPlot(LHA_Stuber_combined_neuron,reduction='umap',label=TRUE)
+```
+
+
+
+```{r}
+LHA_Stuber_combined_neuron <- subset(LHA_Stuber_combined, idents = c("2"))
+```
+
+```{r}
+#Save the Seurat object for further analysis in part 2
+save(LHA_Stuber_combined_neuron,file="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_stuber_neuron_2020Nov.Robj")
+```

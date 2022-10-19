@@ -1,0 +1,43 @@
+---
+title: "LHA_SCRBseq_preprocess_2020"
+date: "11/28/2020"
+output: html_document
+#based on Trace's 'LHA_SCRBseq_Seurat_2018.rmd'
+---
+
+```{r init, message=FALSE}
+# Load the LHA metadata
+lha.meta <- read.table("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/scRNA-Seq/data/Sternson_data/merged_sample_info.txt",sep="\t",as.is=F,row.names=NULL, header=TRUE)
+
+#assign row names to metadata object
+rownames(lha.meta)=(lha.meta[,1])
+lha.meta=lha.meta[,-1]
+
+#load gene expression data for first batch of PVH seq, create ordered rownames
+lha.gene.exp=read.table("/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/scRNA-Seq/data/Sternson_data/merged_counts_genename.txt",sep="\t",as.is=T,row.names= )
+rownames(lha.gene.exp)=make.unique(lha.gene.exp[,1])
+colnames(lha.gene.exp)=lha.gene.exp[1,]
+lha.gene.exp=lha.gene.exp[-1,-1]
+
+#remove ERCCs into separate matrix (epmty well subtraction not performed on this)
+lha.ercc.ids <- grep(pattern = "^ERCC-", x = rownames(x = lha.gene.exp), value = TRUE)
+lha.ercc <- lha.gene.exp[lha.ercc.ids,]
+
+#cellular gene counts into separe matrix (epmty well subtraction IS performed on this)
+lha.ercc.slots <- grep(pattern = "^ERCC-", x = rownames(x = lha.gene.exp), value = FALSE)
+lha.genes <- lha.gene.exp[-lha.ercc.slots,]
+
+#make new dataframe with gene counts and no ercc to use going forward
+lha.data <- data.matrix(lha.genes)
+class(lha.data)
+
+```
+
+
+# Perform empty well subtraction (see "2_LHA_empty_well_munging_original.Rmd" script) then proceed
+
+```{r}
+class(lha.data.subtracted)
+write.table(lha.data.subtracted, '/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/scRNA-Seq/data/Sternson_data/merged_counts_subtracted.txt')
+```
+

@@ -1,0 +1,106 @@
+---
+title: "LHA_scRNAseq_integration_2020"
+output: html_notebook
+
+Seurat version: 3.1.3
+chunk_output_type: inline
+
+---
+```{r}
+library(Seurat)
+```
+ 
+
+#Load three LHA datasets (Seurat Objects)
+```{r}
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_sternson_2020Nov.Robj')
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_jackson_neuron_2020Nov.Robj')
+load('/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_stuber_neuron_2020Nov.Robj')
+```
+
+
+```{r}
+total.genes <- list(rownames(LHA_Jackson_combined_neurons@assays$RNA),rownames(LHA_Stuber_combined_neuron@assays$RNA),rownames(LHA_Trace@assays$RNA))
+common.genes <- Reduce(f = intersect, x = total.genes)
+```
+
+```{r}
+LHA_Jackson_combined_neurons<- subset(LHA_Jackson_combined_neurons,features=common.genes)
+LHA_Stuber_combined_neuron<- subset(LHA_Stuber_combined_neuron,features=common.genes)
+LHA_Trace<- subset(LHA_Trace,features=common.genes)
+```
+# Filter out cells with low quality and doublets or multiplets from the datasets
+```{r}
+LHA_Stuber_combined_neuron <- subset(LHA_Stuber_combined_neuron, subset = nFeature_RNA > 500 & nFeature_RNA < 7500 & nCount_RNA < 2e+05)
+LHA_Jackson_combined_neurons<- subset(LHA_Jackson_combined_neurons, subset = nFeature_RNA > 500 & nFeature_RNA < 7500 & nCount_RNA < 2e+05)
+LHA_Trace<- subset(LHA_Trace, subset = nFeature_RNA > 500 & nFeature_RNA < 7500 & nCount_RNA < 2e+05)
+```
+
+```{r}
+LHA.list=c(LHA_Jackson_combined_neurons,LHA_Trace,LHA_Stuber_combined_neuron)
+```
+
+# Identify variable features and perform data integration
+```{r}
+for (i in 1:length(LHA.list)) {
+    LHA.list[[i]] <- FindVariableFeatures(LHA.list[[i]], selection.method = "vst", 
+        nfeatures = 2000, verbose = TRUE)
+}
+lha.anchors <- FindIntegrationAnchors(object.list = LHA.list, dims = 1:30)
+lha.integrated <- IntegrateData(anchorset = lha.anchors , dims = 1:30,features.to.integrate = common.genes)
+```
+# Modify metadata so that they would make sense ("SeuratProject" -> LHA_10x; "Q5","Q6","Q7","Q8" -> LHA_SCRB)
+```{r}
+lha.integrated_neurons=lha.integrated # just to change the object name to avoid confusion
+Idents(lha.integrated_neurons)='orig.ident'
+lha.integrated_neurons <- RenameIdents(object = lha.integrated_neurons, 'SeuratProject' = 'LHA_10x','Q5' = 'LHA_SCRB','Q6' = 'LHA_SCRB','Q7' = 'LHA_SCRB','Q8' = 'LHA_SCRB')
+
+lha.integrated_neurons <- AddMetaData(
+    object = lha.integrated_neurons,
+    metadata =Idents(lha.integrated_neurons),
+    col.name = 'scRNAseq_sources')
+```
+
+# switch to integrated assay. The variable features of this assay are automatically
+# set during IntegrateData
+```{r}
+DefaultAssay(lha.integrated_neurons) <- "integrated"
+#DefaultAssay(lha.integrated_neurons) <- "RNA"
+```
+# Scale data and run PCA
+```{r}
+lha.integrated_neurons=ScaleData(lha.integrated_neurons)
+lha.integrated_neurons <- RunPCA(lha.integrated_neurons, verbose = FALSE)
+lha.integrated_neurons <- RunUMAP(lha.integrated_neurons, dims = 1:30)
+lha.integrated_neurons <- RunTSNE(lha.integrated_neurons, seed.use=3,dims = 1:30,perplexity=40)
+```
+# Evaluate the performance of PCA
+```{r}
+lha.integrated_neurons <- JackStraw(lha.integrated_neurons, num.replicate = 100)
+lha.integrated_neurons <- ScoreJackStraw(lha.integrated_neurons, dims = 1:20)
+JackStrawPlot(lha.integrated_neurons, dims = 1:15)
+ElbowPlot(lha.integrated_neurons)
+```
+# Clustering analysis (initial analysis, this is before optimization)
+```{r}
+lha.integrated_neurons <- FindNeighbors(lha.integrated_neurons, dims=1:30)
+lha.integrated_neurons <- FindClusters(lha.integrated_neurons, resolution = 0.5)
+```
+# Visualizations
+```{r,fig.height=5, fig.width=15, message=FALSE, warnings=FALSE}
+DimPlot(lha.integrated_neurons, reduction = "tsne", group.by = "scRNAseq_sources",,split.by = "scRNAseq_sources",pt.size=1)+FontSize(x.text = 26,y.text = 26,x.title = 28, y.title = 28, main=500) + BoldTitle() +NoLegend()
+```
+
+```{r}
+DimPlot(lha.integrated_neurons, reduction = "umap",   group.by = "ident", label=TRUE)
+```
+
+```{r}
+DimPlot(lha.integrated_neurons, reduction = "tsne",  group.by = "ident", label=TRUE)
+```
+
+##   Save data
+```{r}
+#Save the Seurat object for further analysis in part 2
+save(lha.integrated_neurons,file="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_integrated_neurons_2020Nov.Robj")
+```

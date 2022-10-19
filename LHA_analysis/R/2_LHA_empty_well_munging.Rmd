@@ -1,0 +1,1040 @@
+---
+title: "empty_well_subtraction"
+author: "Trace"
+date: "3/8/2018"
+output: html_document
+---
+
+#Extract the cell number associated with the first plate: Plate_Q5_100 
+```{r}
+#retrive cells from this plate
+Plate_Q5_100_ID = which(lha.meta$fastq== "Plate_Q5_100")
+length(Plate_Q5_100_ID)
+
+#ID the empty wells
+Plate_Q5_100_ID_empty = which(lha.meta$fastq== "Plate_Q5_100" & lha.meta$sample == "empty")
+length(Plate_Q5_100_ID_empty)
+
+#ID the ercc only wells
+Plate_Q5_100_ID_ercc = which(lha.meta$fastq== "Plate_Q5_100" & lha.meta$sample == "ERCC")
+length(Plate_Q5_100_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q5_100_ID_lha = which(lha.meta$fastq== "Plate_Q5_100" & lha.meta$sample == "LHA")
+length(Plate_Q5_100_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q5_100_ID_neg = c(Plate_Q5_100_ID_empty,Plate_Q5_100_ID_ercc)
+length(Plate_Q5_100_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q5_100_all_data = lha.data[,Plate_Q5_100_ID]
+Plate_Q5_100_lha_data = lha.data[,Plate_Q5_100_ID_lha]
+Plate_Q5_100_neg_data = lha.data[,Plate_Q5_100_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q5_100_neg_data_SUM = as.matrix(rowSums((Plate_Q5_100_neg_data)))
+#a=as.matrix(sapply(Plate_Q5_100_neg_data, as.numeric))  
+#Plate_Q5_100_neg_data_SUM = as.matrix(rowSums(a))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q5_100_lha_data_subtracted = Plate_Q5_100_lha_data -c(Plate_Q5_100_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q5_100_lha_data_subtracted[Plate_Q5_100_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q5_100_lha_final = Plate_Q5_100_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q5_100_neg_data)
+remove(Plate_Q5_100_all_data)
+remove(Plate_Q5_100_lha_data)
+remove(Plate_Q5_100_lha_data_subtracted)
+remove(Plate_Q5_100_neg_data_SUM)
+remove(Plate_Q5_100_ID_empty)
+remove(Plate_Q5_100_ID_ercc)
+remove(Plate_Q5_100_ID_neg)
+remove(Plate_Q5_100_ID_lha)
+remove(Plate_Q5_100_ID)
+```
+
+
+#Extract the cell number associated with the first plate: Plate_Q5_104 
+```{r}
+#retrive cells from this plate
+Plate_Q5_104_ID = which(lha.meta$fastq== "Plate_Q5_104")
+length(Plate_Q5_104_ID)
+
+#ID the empty wells
+Plate_Q5_104_ID_empty = which(lha.meta$fastq== "Plate_Q5_104" & lha.meta$sample == "empty")
+length(Plate_Q5_104_ID_empty)
+
+#ID the ercc only wells
+Plate_Q5_104_ID_ercc = which(lha.meta$fastq== "Plate_Q5_104" & lha.meta$sample == "ERCC")
+length(Plate_Q5_104_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q5_104_ID_lha = which(lha.meta$fastq== "Plate_Q5_104" & lha.meta$sample == "LHA")
+length(Plate_Q5_104_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q5_104_ID_neg = c(Plate_Q5_104_ID_empty,Plate_Q5_104_ID_ercc)
+length(Plate_Q5_104_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q5_104_all_data = lha.data[,Plate_Q5_104_ID]
+Plate_Q5_104_lha_data = lha.data[,Plate_Q5_104_ID_lha]
+Plate_Q5_104_neg_data = lha.data[,Plate_Q5_104_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q5_104_neg_data_SUM = as.matrix(rowSums(Plate_Q5_104_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q5_104_lha_data_subtracted = Plate_Q5_104_lha_data - c(Plate_Q5_104_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q5_104_lha_data_subtracted[Plate_Q5_104_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q5_104_lha_final = Plate_Q5_104_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q5_104_neg_data)
+#remove(Plate_Q5_104_data)
+remove(Plate_Q5_104_all_data)
+remove(Plate_Q5_104_lha_data)
+remove(Plate_Q5_104_lha_data_subtracted)
+remove(Plate_Q5_104_neg_data_SUM)
+remove(Plate_Q5_104_ID_empty)
+remove(Plate_Q5_104_ID_ercc)
+remove(Plate_Q5_104_ID_neg)
+remove(Plate_Q5_104_ID_lha)
+remove(Plate_Q5_104_ID)
+#remove(Plate_Q5_104_lha)
+#remove(Plate_Q5_104_empty)
+#remove(Plate_Q5_104_ercc)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q5_108 
+```{r}
+#retrive cells from this plate
+Plate_Q5_108_ID = which(lha.meta$fastq== "Plate_Q5_108")
+length(Plate_Q5_108_ID)
+
+#ID the empty wells
+Plate_Q5_108_ID_empty = which(lha.meta$fastq== "Plate_Q5_108" & lha.meta$sample == "empty")
+length(Plate_Q5_108_ID_empty)
+
+#ID the ercc only wells
+Plate_Q5_108_ID_ercc = which(lha.meta$fastq== "Plate_Q5_108" & lha.meta$sample == "ERCC")
+length(Plate_Q5_108_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q5_108_ID_lha = which(lha.meta$fastq== "Plate_Q5_108" & lha.meta$sample == "LHA")
+length(Plate_Q5_108_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q5_108_ID_neg = c(Plate_Q5_108_ID_empty,Plate_Q5_108_ID_ercc)
+length(Plate_Q5_108_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q5_108_all_data = lha.data[,Plate_Q5_108_ID]
+Plate_Q5_108_lha_data = lha.data[,Plate_Q5_108_ID_lha]
+Plate_Q5_108_neg_data = lha.data[,Plate_Q5_108_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q5_108_neg_data_SUM = as.matrix(rowSums(Plate_Q5_108_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q5_108_lha_data_subtracted = Plate_Q5_108_lha_data - c(Plate_Q5_108_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q5_108_lha_data_subtracted[Plate_Q5_108_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q5_108_lha_final = Plate_Q5_108_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q5_108_neg_data)
+#remove(Plate_Q5_108_data)
+remove(Plate_Q5_108_all_data)
+remove(Plate_Q5_108_lha_data)
+remove(Plate_Q5_108_lha_data_subtracted)
+remove(Plate_Q5_108_neg_data_SUM)
+remove(Plate_Q5_108_ID_empty)
+remove(Plate_Q5_108_ID_ercc)
+remove(Plate_Q5_108_ID_neg)
+remove(Plate_Q5_108_ID)
+#remove(Plate_Q5_108_lha)
+```
+
+#Extract the cell number associated with the first plate: Plate_Q5_112
+```{r}
+#retrive cells from this plate
+Plate_Q5_112_ID = which(lha.meta$fastq== "Plate_Q5_112")
+length(Plate_Q5_112_ID)
+
+#ID the empty wells
+Plate_Q5_112_ID_empty = which(lha.meta$fastq== "Plate_Q5_112" & lha.meta$sample == "empty")
+length(Plate_Q5_112_ID_empty)
+
+#ID the ercc only wells
+Plate_Q5_112_ID_ercc = which(lha.meta$fastq== "Plate_Q5_112" & lha.meta$sample == "ERCC")
+length(Plate_Q5_112_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q5_112_ID_lha = which(lha.meta$fastq== "Plate_Q5_112" & lha.meta$sample == "LHA")
+length(Plate_Q5_112_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q5_112_ID_neg = c(Plate_Q5_112_ID_empty,Plate_Q5_112_ID_ercc)
+length(Plate_Q5_112_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q5_112_all_data = lha.data[,Plate_Q5_112_ID]
+Plate_Q5_112_lha_data = lha.data[,Plate_Q5_112_ID_lha]
+Plate_Q5_112_neg_data = lha.data[,Plate_Q5_112_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q5_112_neg_data_SUM = as.matrix(rowSums(Plate_Q5_112_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q5_112_lha_data_subtracted = Plate_Q5_112_lha_data - c(Plate_Q5_112_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q5_112_lha_data_subtracted[Plate_Q5_112_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q5_112_lha_final = Plate_Q5_112_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q5_112_neg_data)
+remove(Plate_Q5_112_all_data)
+remove(Plate_Q5_112_lha_data)
+remove(Plate_Q5_112_lha_data_subtracted)
+remove(Plate_Q5_112_neg_data_SUM)
+remove(Plate_Q5_112_ID_empty)
+remove(Plate_Q5_112_ID_ercc)
+remove(Plate_Q5_112_ID_neg)
+remove(Plate_Q5_112_ID_lha)
+remove(Plate_Q5_112_ID)
+```
+
+
+# Extract the cell number associated with the first plate: Plate_Q5_116 
+# Note, no emty wells, so perform subtraction based on plate 108
+```{r}
+#retrive cells from this plate
+Plate_Q5_116_ID = which(lha.meta$fastq== "Plate_Q5_116")
+length(Plate_Q5_116_ID)
+
+#ID the empty wells
+Plate_Q5_116_ID_empty = which(lha.meta$fastq== "Plate_Q5_116" & lha.meta$sample == "empty")
+length(Plate_Q5_116_ID_empty)
+
+#ID the ercc only wells
+Plate_Q5_116_ID_ercc = which(lha.meta$fastq== "Plate_Q5_116" & lha.meta$sample == "ERCC")
+length(Plate_Q5_116_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q5_116_ID_lha = which(lha.meta$fastq== "Plate_Q5_116" & lha.meta$sample == "LHA")
+length(Plate_Q5_116_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q5_116_ID_neg = c(Plate_Q5_116_ID_empty,Plate_Q5_116_ID_ercc)
+length(Plate_Q5_116_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q5_116_all_data = lha.data[,Plate_Q5_116_ID]
+Plate_Q5_116_lha_data = lha.data[,Plate_Q5_116_ID_lha]
+Plate_Q5_116_neg_data = lha.data[,Plate_Q5_116_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q5_116_neg_data_SUM = as.matrix(rowSums(Plate_Q5_116_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q5_116_lha_data_subtracted = Plate_Q5_116_lha_data - c(Plate_Q5_116_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q5_116_lha_data_subtracted[Plate_Q5_116_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q5_116_lha_final = Plate_Q5_116_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q5_116_neg_data)
+remove(Plate_Q5_116_all_data)
+remove(Plate_Q5_116_lha_data)
+remove(Plate_Q5_116_lha_data_subtracted)
+remove(Plate_Q5_116_neg_data_SUM)
+remove(Plate_Q5_116_ID_empty)
+remove(Plate_Q5_116_ID_ercc)
+remove(Plate_Q5_116_ID_neg)
+remove(Plate_Q5_116_ID_lha)
+remove(Plate_Q5_116_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q6_101
+```{r}
+#retrive cells from this plate
+Plate_Q6_101_ID = which(lha.meta$fastq== "Plate_Q6_101")
+length(Plate_Q6_101_ID)
+
+#ID the empty wells
+Plate_Q6_101_ID_empty = which(lha.meta$fastq== "Plate_Q6_101" & lha.meta$sample == "empty")
+length(Plate_Q6_101_ID_empty)
+
+#ID the ercc only wells
+Plate_Q6_101_ID_ercc = which(lha.meta$fastq== "Plate_Q6_101" & lha.meta$sample == "ERCC")
+length(Plate_Q6_101_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q6_101_ID_lha = which(lha.meta$fastq== "Plate_Q6_101" & lha.meta$sample == "LHA")
+length(Plate_Q6_101_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q6_101_ID_neg = c(Plate_Q6_101_ID_empty,Plate_Q6_101_ID_ercc)
+length(Plate_Q6_101_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q6_101_all_data = lha.data[,Plate_Q6_101_ID]
+Plate_Q6_101_lha_data = lha.data[,Plate_Q6_101_ID_lha]
+Plate_Q6_101_neg_data = lha.data[,Plate_Q6_101_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q6_101_neg_data_SUM = as.matrix(rowSums(Plate_Q6_101_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q6_101_lha_data_subtracted = Plate_Q6_101_lha_data - c(Plate_Q6_101_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q6_101_lha_data_subtracted[Plate_Q6_101_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q6_101_lha_final = Plate_Q6_101_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q6_101_neg_data)
+remove(Plate_Q6_101_all_data)
+remove(Plate_Q6_101_lha_data)
+remove(Plate_Q6_101_lha_data_subtracted)
+remove(Plate_Q6_101_neg_data_SUM)
+remove(Plate_Q6_101_ID_empty)
+remove(Plate_Q6_101_ID_ercc)
+remove(Plate_Q6_101_ID_neg)
+remove(Plate_Q6_101_ID_lha)
+remove(Plate_Q6_101_ID)
+```
+
+
+#Extract the cell number associated with the first plate: Plate_Q6_105
+```{r}
+#retrive cells from this plate
+Plate_Q6_105_ID = which(lha.meta$fastq== "Plate_Q6_105")
+length(Plate_Q6_105_ID)
+
+#ID the empty wells
+Plate_Q6_105_ID_empty = which(lha.meta$fastq== "Plate_Q6_105" & lha.meta$sample == "empty")
+length(Plate_Q6_105_ID_empty)
+
+#ID the ercc only wells
+Plate_Q6_105_ID_ercc = which(lha.meta$fastq== "Plate_Q6_105" & lha.meta$sample == "ERCC")
+length(Plate_Q6_105_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q6_105_ID_lha = which(lha.meta$fastq== "Plate_Q6_105" & lha.meta$sample == "LHA")
+length(Plate_Q6_105_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q6_105_ID_neg = c(Plate_Q6_105_ID_empty,Plate_Q6_105_ID_ercc)
+length(Plate_Q6_105_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q6_105_all_data = lha.data[,Plate_Q6_105_ID]
+Plate_Q6_105_lha_data = lha.data[,Plate_Q6_105_ID_lha]
+Plate_Q6_105_neg_data = lha.data[,Plate_Q6_105_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q6_105_neg_data_SUM = as.matrix(rowSums(Plate_Q6_105_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q6_105_lha_data_subtracted = Plate_Q6_105_lha_data - c(Plate_Q6_105_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q6_105_lha_data_subtracted[Plate_Q6_105_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q6_105_lha_final = Plate_Q6_105_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q6_105_neg_data)
+remove(Plate_Q6_105_all_data)
+remove(Plate_Q6_105_lha_data)
+remove(Plate_Q6_105_lha_data_subtracted)
+remove(Plate_Q6_105_neg_data_SUM)
+remove(Plate_Q6_105_ID_empty)
+remove(Plate_Q6_105_ID_ercc)
+remove(Plate_Q6_105_ID_neg)
+remove(Plate_Q6_105_ID_lha)
+remove(Plate_Q6_105_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q6_109
+```{r}
+#retrive cells from this plate
+Plate_Q6_109_ID = which(lha.meta$fastq== "Plate_Q6_109")
+length(Plate_Q6_109_ID)
+
+#ID the empty wells
+Plate_Q6_109_ID_empty = which(lha.meta$fastq== "Plate_Q6_109" & lha.meta$sample == "empty")
+length(Plate_Q6_109_ID_empty)
+
+#ID the ercc only wells
+Plate_Q6_109_ID_ercc = which(lha.meta$fastq== "Plate_Q6_109" & lha.meta$sample == "ERCC")
+length(Plate_Q6_109_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q6_109_ID_lha = which(lha.meta$fastq== "Plate_Q6_109" & lha.meta$sample == "LHA")
+length(Plate_Q6_109_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q6_109_ID_neg = c(Plate_Q6_109_ID_empty,Plate_Q6_109_ID_ercc)
+length(Plate_Q6_109_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q6_109_all_data = lha.data[,Plate_Q6_109_ID]
+Plate_Q6_109_lha_data = lha.data[,Plate_Q6_109_ID_lha]
+Plate_Q6_109_neg_data = lha.data[,Plate_Q6_109_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q6_109_neg_data_SUM = as.matrix(rowSums(Plate_Q6_109_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q6_109_lha_data_subtracted = Plate_Q6_109_lha_data - c(Plate_Q6_109_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q6_109_lha_data_subtracted[Plate_Q6_109_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q6_109_lha_final = Plate_Q6_109_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q6_109_neg_data)
+remove(Plate_Q6_109_all_data)
+remove(Plate_Q6_109_lha_data)
+remove(Plate_Q6_109_lha_data_subtracted)
+remove(Plate_Q6_109_neg_data_SUM)
+remove(Plate_Q6_109_ID_empty)
+remove(Plate_Q6_109_ID_ercc)
+remove(Plate_Q6_109_ID_neg)
+remove(Plate_Q6_109_ID_lha)
+remove(Plate_Q6_109_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q6_113
+```{r}
+#retrive cells from this plate
+Plate_Q6_113_ID = which(lha.meta$fastq== "Plate_Q6_113")
+length(Plate_Q6_113_ID)
+
+#ID the empty wells
+Plate_Q6_113_ID_empty = which(lha.meta$fastq== "Plate_Q6_113" & lha.meta$sample == "empty")
+length(Plate_Q6_113_ID_empty)
+
+#ID the ercc only wells
+Plate_Q6_113_ID_ercc = which(lha.meta$fastq== "Plate_Q6_113" & lha.meta$sample == "ERCC")
+length(Plate_Q6_113_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q6_113_ID_lha = which(lha.meta$fastq== "Plate_Q6_113" & lha.meta$sample == "LHA")
+length(Plate_Q6_113_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q6_113_ID_neg = c(Plate_Q6_113_ID_empty,Plate_Q6_113_ID_ercc)
+length(Plate_Q6_113_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q6_113_all_data = lha.data[,Plate_Q6_113_ID]
+Plate_Q6_113_lha_data = lha.data[,Plate_Q6_113_ID_lha]
+Plate_Q6_113_neg_data = lha.data[,Plate_Q6_113_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q6_113_neg_data_SUM = as.matrix(rowSums(Plate_Q6_113_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q6_113_lha_data_subtracted = Plate_Q6_113_lha_data - c(Plate_Q6_113_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q6_113_lha_data_subtracted[Plate_Q6_113_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q6_113_lha_final = Plate_Q6_113_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q6_113_neg_data)
+remove(Plate_Q6_113_all_data)
+remove(Plate_Q6_113_lha_data)
+remove(Plate_Q6_113_lha_data_subtracted)
+remove(Plate_Q6_113_neg_data_SUM)
+remove(Plate_Q6_113_ID_empty)
+remove(Plate_Q6_113_ID_ercc)
+remove(Plate_Q6_113_ID_neg)
+remove(Plate_Q6_113_ID_lha)
+remove(Plate_Q6_113_ID)
+```
+
+
+#Extract the cell number associated with the first plate: Plate_Q6_117
+# note HCRT levels in these empty well was unusually small. Used levels from previous plate for subtrations
+```{r}
+#retrive cells from this plate
+Plate_Q6_117_ID = which(lha.meta$fastq== "Plate_Q6_117")
+length(Plate_Q6_117_ID)
+
+#ID the empty wells
+Plate_Q6_117_ID_empty = which(lha.meta$fastq== "Plate_Q6_117" & lha.meta$sample == "empty")
+length(Plate_Q6_117_ID_empty)
+
+#ID the ercc only wells
+Plate_Q6_117_ID_ercc = which(lha.meta$fastq== "Plate_Q6_117" & lha.meta$sample == "ERCC")
+length(Plate_Q6_117_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q6_117_ID_lha = which(lha.meta$fastq== "Plate_Q6_117" & lha.meta$sample == "LHA")
+length(Plate_Q6_117_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q6_117_ID_neg = c(Plate_Q6_117_ID_empty,Plate_Q6_117_ID_ercc)
+length(Plate_Q6_117_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q6_117_all_data = lha.data[,Plate_Q6_117_ID]
+Plate_Q6_117_lha_data = lha.data[,Plate_Q6_117_ID_lha]
+Plate_Q6_117_neg_data = lha.data[,Plate_Q6_117_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q6_117_neg_data_SUM = as.matrix(rowSums(Plate_Q6_117_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q6_117_lha_data_subtracted = Plate_Q6_117_lha_data - c(Plate_Q6_117_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q6_117_lha_data_subtracted[Plate_Q6_117_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q6_117_lha_final = Plate_Q6_117_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q6_117_neg_data)
+remove(Plate_Q6_117_all_data)
+remove(Plate_Q6_117_lha_data)
+remove(Plate_Q6_117_lha_data_subtracted)
+remove(Plate_Q6_117_neg_data_SUM)
+remove(Plate_Q6_117_ID_empty)
+remove(Plate_Q6_117_ID_ercc)
+remove(Plate_Q6_117_ID_neg)
+remove(Plate_Q6_117_ID_lha)
+remove(Plate_Q6_117_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q7_102
+```{r}
+#retrive cells from this plate
+Plate_Q7_102_ID = which(lha.meta$fastq== "Plate_Q7_102")
+length(Plate_Q7_102_ID)
+
+#ID the empty wells
+Plate_Q7_102_ID_empty = which(lha.meta$fastq== "Plate_Q7_102" & lha.meta$sample == "empty")
+length(Plate_Q7_102_ID_empty)
+
+#ID the ercc only wells
+Plate_Q7_102_ID_ercc = which(lha.meta$fastq== "Plate_Q7_102" & lha.meta$sample == "ERCC")
+length(Plate_Q7_102_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q7_102_ID_lha = which(lha.meta$fastq== "Plate_Q7_102" & lha.meta$sample == "LHA")
+length(Plate_Q7_102_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q7_102_ID_neg = c(Plate_Q7_102_ID_empty,Plate_Q7_102_ID_ercc)
+length(Plate_Q7_102_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q7_102_all_data = lha.data[,Plate_Q7_102_ID]
+Plate_Q7_102_lha_data = lha.data[,Plate_Q7_102_ID_lha]
+Plate_Q7_102_neg_data = lha.data[,Plate_Q7_102_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q7_102_neg_data_SUM = as.matrix(rowSums(Plate_Q7_102_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q7_102_lha_data_subtracted = Plate_Q7_102_lha_data - c(Plate_Q7_102_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q7_102_lha_data_subtracted[Plate_Q7_102_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q7_102_lha_final = Plate_Q7_102_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q7_102_neg_data)
+remove(Plate_Q7_102_all_data)
+remove(Plate_Q7_102_lha_data)
+remove(Plate_Q7_102_lha_data_subtracted)
+remove(Plate_Q7_102_neg_data_SUM)
+remove(Plate_Q7_102_ID_empty)
+remove(Plate_Q7_102_ID_ercc)
+remove(Plate_Q7_102_ID_neg)
+remove(Plate_Q7_102_ID_lha)
+remove(Plate_Q7_102_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q7_106
+```{r}
+#retrive cells from this plate
+Plate_Q7_106_ID = which(lha.meta$fastq== "Plate_Q7_106")
+length(Plate_Q7_106_ID)
+
+#ID the empty wells
+Plate_Q7_106_ID_empty = which(lha.meta$fastq== "Plate_Q7_106" & lha.meta$sample == "empty")
+length(Plate_Q7_106_ID_empty)
+
+#ID the ercc only wells
+Plate_Q7_106_ID_ercc = which(lha.meta$fastq== "Plate_Q7_106" & lha.meta$sample == "ERCC")
+length(Plate_Q7_106_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q7_106_ID_lha = which(lha.meta$fastq== "Plate_Q7_106" & lha.meta$sample == "LHA")
+length(Plate_Q7_106_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q7_106_ID_neg = c(Plate_Q7_106_ID_empty,Plate_Q7_106_ID_ercc)
+length(Plate_Q7_106_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q7_106_all_data = lha.data[,Plate_Q7_106_ID]
+Plate_Q7_106_lha_data = lha.data[,Plate_Q7_106_ID_lha]
+Plate_Q7_106_neg_data = lha.data[,Plate_Q7_106_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q7_106_neg_data_SUM = as.matrix(rowSums(Plate_Q7_106_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q7_106_lha_data_subtracted = Plate_Q7_106_lha_data - c(Plate_Q7_106_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q7_106_lha_data_subtracted[Plate_Q7_106_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q7_106_lha_final = Plate_Q7_106_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q7_106_neg_data)
+remove(Plate_Q7_106_all_data)
+remove(Plate_Q7_106_lha_data)
+remove(Plate_Q7_106_lha_data_subtracted)
+remove(Plate_Q7_106_neg_data_SUM)
+remove(Plate_Q7_106_ID_empty)
+remove(Plate_Q7_106_ID_ercc)
+remove(Plate_Q7_106_ID_neg)
+remove(Plate_Q7_106_ID_lha)
+remove(Plate_Q7_106_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q7_110
+```{r}
+#retrive cells from this plate
+Plate_Q7_110_ID = which(lha.meta$fastq== "Plate_Q7_110")
+length(Plate_Q7_110_ID)
+
+#ID the empty wells
+Plate_Q7_110_ID_empty = which(lha.meta$fastq== "Plate_Q7_110" & lha.meta$sample == "empty")
+length(Plate_Q7_110_ID_empty)
+
+#ID the ercc only wells
+Plate_Q7_110_ID_ercc = which(lha.meta$fastq== "Plate_Q7_110" & lha.meta$sample == "ERCC")
+length(Plate_Q7_110_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q7_110_ID_lha = which(lha.meta$fastq== "Plate_Q7_110" & lha.meta$sample == "LHA")
+length(Plate_Q7_110_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q7_110_ID_neg = c(Plate_Q7_110_ID_empty,Plate_Q7_110_ID_ercc)
+length(Plate_Q7_110_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q7_110_all_data = lha.data[,Plate_Q7_110_ID]
+Plate_Q7_110_lha_data = lha.data[,Plate_Q7_110_ID_lha]
+Plate_Q7_110_neg_data = lha.data[,Plate_Q7_110_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q7_110_neg_data_SUM = as.matrix(rowSums(Plate_Q7_110_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q7_110_lha_data_subtracted = Plate_Q7_110_lha_data - c(Plate_Q7_110_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q7_110_lha_data_subtracted[Plate_Q7_110_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q7_110_lha_final = Plate_Q7_110_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q7_110_neg_data)
+remove(Plate_Q7_110_all_data)
+remove(Plate_Q7_110_lha_data)
+remove(Plate_Q7_110_lha_data_subtracted)
+remove(Plate_Q7_110_neg_data_SUM)
+remove(Plate_Q7_110_ID_empty)
+remove(Plate_Q7_110_ID_ercc)
+remove(Plate_Q7_110_ID_neg)
+remove(Plate_Q7_110_ID_lha)
+remove(Plate_Q7_110_ID)
+```
+
+
+#Extract the cell number associated with the first plate: Plate_Q7_114
+# Note, no empty wells, used Plate_Q7_106 values
+```{r}
+#retrive cells from this plate
+Plate_Q7_114_ID = which(lha.meta$fastq== "Plate_Q7_114")
+length(Plate_Q7_114_ID)
+
+#ID the empty wells
+Plate_Q7_114_ID_empty = which(lha.meta$fastq== "Plate_Q7_114" & lha.meta$sample == "empty")
+length(Plate_Q7_114_ID_empty)
+
+#ID the ercc only wells
+Plate_Q7_114_ID_ercc = which(lha.meta$fastq== "Plate_Q7_114" & lha.meta$sample == "ERCC")
+length(Plate_Q7_114_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q7_114_ID_lha = which(lha.meta$fastq== "Plate_Q7_114" & lha.meta$sample == "LHA")
+length(Plate_Q7_114_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q7_114_ID_neg = c(Plate_Q7_114_ID_empty,Plate_Q7_114_ID_ercc)
+length(Plate_Q7_114_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q7_114_all_data = lha.data[,Plate_Q7_114_ID]
+Plate_Q7_114_lha_data = lha.data[,Plate_Q7_114_ID_lha]
+Plate_Q7_114_neg_data = lha.data[,Plate_Q7_114_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q7_114_neg_data_SUM = as.matrix(rowSums(Plate_Q7_114_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q7_114_lha_data_subtracted = Plate_Q7_114_lha_data - c(Plate_Q7_114_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q7_114_lha_data_subtracted[Plate_Q7_114_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q7_114_lha_final = Plate_Q7_114_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q7_114_neg_data)
+remove(Plate_Q7_114_all_data)
+remove(Plate_Q7_114_lha_data)
+remove(Plate_Q7_114_lha_data_subtracted)
+remove(Plate_Q7_114_neg_data_SUM)
+remove(Plate_Q7_114_ID_empty)
+remove(Plate_Q7_114_ID_ercc)
+remove(Plate_Q7_114_ID_neg)
+remove(Plate_Q7_114_ID_lha)
+remove(Plate_Q7_114_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q7_120
+```{r}
+#retrive cells from this plate
+Plate_Q7_120_ID = which(lha.meta$fastq== "Plate_Q7_120")
+length(Plate_Q7_120_ID)
+
+#ID the empty wells
+Plate_Q7_120_ID_empty = which(lha.meta$fastq== "Plate_Q7_120" & lha.meta$sample == "empty")
+length(Plate_Q7_120_ID_empty)
+
+#ID the ercc only wells
+Plate_Q7_120_ID_ercc = which(lha.meta$fastq== "Plate_Q7_120" & lha.meta$sample == "ERCC")
+length(Plate_Q7_120_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q7_120_ID_lha = which(lha.meta$fastq== "Plate_Q7_120" & lha.meta$sample == "LHA")
+length(Plate_Q7_120_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q7_120_ID_neg = c(Plate_Q7_120_ID_empty,Plate_Q7_120_ID_ercc)
+length(Plate_Q7_120_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q7_120_all_data = lha.data[,Plate_Q7_120_ID]
+Plate_Q7_120_lha_data = lha.data[,Plate_Q7_120_ID_lha]
+Plate_Q7_120_neg_data = lha.data[,Plate_Q7_120_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q7_120_neg_data_SUM = as.matrix(rowSums(Plate_Q7_120_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q7_120_lha_data_subtracted = Plate_Q7_120_lha_data - c(Plate_Q7_120_neg_data_SUM) 
+
+#convert all negative values to zeros
+Plate_Q7_120_lha_data_subtracted[Plate_Q7_120_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q7_120_lha_final = Plate_Q7_120_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q7_120_neg_data)
+remove(Plate_Q7_120_all_data)
+remove(Plate_Q7_120_lha_data)
+remove(Plate_Q7_120_lha_data_subtracted)
+remove(Plate_Q7_120_neg_data_SUM)
+remove(Plate_Q7_120_ID_empty)
+remove(Plate_Q7_120_ID_ercc)
+remove(Plate_Q7_120_ID_neg)
+remove(Plate_Q7_120_ID_lha)
+remove(Plate_Q7_120_ID)
+```
+
+
+#Extract the cell number associated with the first plate: Plate_Q8_103
+```{r}
+#retrive cells from this plate
+Plate_Q8_103_ID = which(lha.meta$fastq== "Plate_Q8_103")
+length(Plate_Q8_103_ID)
+
+#ID the empty wells
+Plate_Q8_103_ID_empty = which(lha.meta$fastq== "Plate_Q8_103" & lha.meta$sample == "empty")
+length(Plate_Q8_103_ID_empty)
+
+#ID the ercc only wells
+Plate_Q8_103_ID_ercc = which(lha.meta$fastq== "Plate_Q8_103" & lha.meta$sample == "ERCC")
+length(Plate_Q8_103_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q8_103_ID_lha = which(lha.meta$fastq== "Plate_Q8_103" & lha.meta$sample == "LHA")
+length(Plate_Q8_103_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q8_103_ID_neg = c(Plate_Q8_103_ID_empty,Plate_Q8_103_ID_ercc)
+length(Plate_Q8_103_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q8_103_all_data = lha.data[,Plate_Q8_103_ID]
+Plate_Q8_103_lha_data = lha.data[,Plate_Q8_103_ID_lha]
+Plate_Q8_103_neg_data = lha.data[,Plate_Q8_103_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q8_103_neg_data_SUM = as.matrix(rowSums(Plate_Q8_103_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q8_103_lha_data_subtracted = Plate_Q8_103_lha_data - c(Plate_Q8_103_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q8_103_lha_data_subtracted[Plate_Q8_103_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q8_103_lha_final = Plate_Q8_103_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q8_103_neg_data)
+remove(Plate_Q8_103_all_data)
+remove(Plate_Q8_103_lha_data)
+remove(Plate_Q8_103_lha_data_subtracted)
+remove(Plate_Q8_103_neg_data_SUM)
+remove(Plate_Q8_103_ID_empty)
+remove(Plate_Q8_103_ID_ercc)
+remove(Plate_Q8_103_ID_neg)
+remove(Plate_Q8_103_ID_lha)
+remove(Plate_Q8_103_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q8_107
+```{r}
+#retrive cells from this plate
+Plate_Q8_107_ID = which(lha.meta$fastq== "Plate_Q8_107")
+length(Plate_Q8_107_ID)
+
+#ID the empty wells
+Plate_Q8_107_ID_empty = which(lha.meta$fastq== "Plate_Q8_107" & lha.meta$sample == "empty")
+length(Plate_Q8_107_ID_empty)
+
+#ID the ercc only wells
+Plate_Q8_107_ID_ercc = which(lha.meta$fastq== "Plate_Q8_107" & lha.meta$sample == "ERCC")
+length(Plate_Q8_107_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q8_107_ID_lha = which(lha.meta$fastq== "Plate_Q8_107" & lha.meta$sample == "LHA")
+length(Plate_Q8_107_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q8_107_ID_neg = c(Plate_Q8_107_ID_empty,Plate_Q8_107_ID_ercc)
+length(Plate_Q8_107_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q8_107_all_data = lha.data[,Plate_Q8_107_ID]
+Plate_Q8_107_lha_data = lha.data[,Plate_Q8_107_ID_lha]
+Plate_Q8_107_neg_data = lha.data[,Plate_Q8_107_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q8_107_neg_data_SUM = as.matrix(rowSums(Plate_Q8_107_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q8_107_lha_data_subtracted = Plate_Q8_107_lha_data - c(Plate_Q8_107_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q8_107_lha_data_subtracted[Plate_Q8_107_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q8_107_lha_final = Plate_Q8_107_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q8_107_neg_data)
+remove(Plate_Q8_107_all_data)
+remove(Plate_Q8_107_lha_data)
+remove(Plate_Q8_107_lha_data_subtracted)
+remove(Plate_Q8_107_neg_data_SUM)
+remove(Plate_Q8_107_ID_empty)
+remove(Plate_Q8_107_ID_ercc)
+remove(Plate_Q8_107_ID_neg)
+remove(Plate_Q8_107_ID_lha)
+remove(Plate_Q8_107_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q8_111
+```{r}
+#retrive cells from this plate
+Plate_Q8_111_ID = which(lha.meta$fastq== "Plate_Q8_111")
+length(Plate_Q8_111_ID)
+
+#ID the empty wells
+Plate_Q8_111_ID_empty = which(lha.meta$fastq== "Plate_Q8_111" & lha.meta$sample == "empty")
+length(Plate_Q8_111_ID_empty)
+
+#ID the ercc only wells
+Plate_Q8_111_ID_ercc = which(lha.meta$fastq== "Plate_Q8_111" & lha.meta$sample == "ERCC")
+length(Plate_Q8_111_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q8_111_ID_lha = which(lha.meta$fastq== "Plate_Q8_111" & lha.meta$sample == "LHA")
+length(Plate_Q8_111_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q8_111_ID_neg = c(Plate_Q8_111_ID_empty,Plate_Q8_111_ID_ercc)
+length(Plate_Q8_111_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q8_111_all_data = lha.data[,Plate_Q8_111_ID]
+Plate_Q8_111_lha_data = lha.data[,Plate_Q8_111_ID_lha]
+Plate_Q8_111_neg_data = lha.data[,Plate_Q8_111_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q8_111_neg_data_SUM = as.matrix(rowSums(Plate_Q8_111_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q8_111_lha_data_subtracted = Plate_Q8_111_lha_data - c(Plate_Q8_111_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q8_111_lha_data_subtracted[Plate_Q8_111_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q8_111_lha_final = Plate_Q8_111_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q8_111_neg_data)
+remove(Plate_Q8_111_all_data)
+remove(Plate_Q8_111_lha_data)
+remove(Plate_Q8_111_lha_data_subtracted)
+remove(Plate_Q8_111_neg_data_SUM)
+remove(Plate_Q8_111_ID_empty)
+remove(Plate_Q8_111_ID_ercc)
+remove(Plate_Q8_111_ID_neg)
+remove(Plate_Q8_111_ID_lha)
+remove(Plate_Q8_111_ID)
+```
+
+
+
+#Extract the cell number associated with the first plate: Plate_Q8_115
+# Note, no empty wells, used Plate_Q7_106 values
+```{r}
+#retrive cells from this plate
+Plate_Q8_115_ID = which(lha.meta$fastq== "Plate_Q8_115")
+length(Plate_Q8_115_ID)
+
+#ID the empty wells
+Plate_Q8_115_ID_empty = which(lha.meta$fastq== "Plate_Q8_115" & lha.meta$sample == "empty")
+length(Plate_Q8_115_ID_empty)
+
+#ID the ercc only wells
+Plate_Q8_115_ID_ercc = which(lha.meta$fastq== "Plate_Q8_115" & lha.meta$sample == "ERCC")
+length(Plate_Q8_115_ID_ercc)
+
+#ID the lha signal only wells
+Plate_Q8_115_ID_lha = which(lha.meta$fastq== "Plate_Q8_115" & lha.meta$sample == "LHA")
+length(Plate_Q8_115_ID_lha)
+
+#concatenate the empty and ercc wells into single negative groups
+Plate_Q8_115_ID_neg = c(Plate_Q8_115_ID_empty,Plate_Q8_115_ID_ercc)
+length(Plate_Q8_115_ID_neg)
+
+#use IDs from above to subset data matrix for this plate
+Plate_Q8_115_all_data = lha.data[,Plate_Q8_115_ID]
+Plate_Q8_115_lha_data = lha.data[,Plate_Q8_115_ID_lha]
+Plate_Q8_115_neg_data = lha.data[,Plate_Q8_115_ID_neg]
+
+#sum counts across all neg cells for every gene
+Plate_Q8_115_neg_data_SUM = as.matrix(rowSums(Plate_Q8_115_neg_data))
+
+#subtract these summed counts from all other cells in the verified LHA dataset
+Plate_Q8_115_lha_data_subtracted = Plate_Q8_115_lha_data - c(Plate_Q8_115_neg_data_SUM)
+
+#convert all negative values to zeros
+Plate_Q8_115_lha_data_subtracted[Plate_Q8_115_lha_data_subtracted<0]  <- 0
+
+#rename matrix for easy handling
+Plate_Q8_115_lha_final = Plate_Q8_115_lha_data_subtracted
+
+#remove files that wont be used again
+remove(Plate_Q8_115_neg_data)
+remove(Plate_Q8_115_all_data)
+remove(Plate_Q8_115_lha_data)
+remove(Plate_Q8_115_lha_data_subtracted)
+remove(Plate_Q8_115_neg_data_SUM)
+remove(Plate_Q8_115_ID_empty)
+remove(Plate_Q8_115_ID_ercc)
+remove(Plate_Q8_115_ID_neg)
+remove(Plate_Q8_115_ID_lha)
+remove(Plate_Q8_115_ID)
+```
+
+
+#concatenate all subtracted LHA only datasets into one common matrix
+```{r}
+lha.data.subtracted = as.data.frame(cbind(Plate_Q5_100_lha_final, Plate_Q5_104_lha_final, Plate_Q5_108_lha_final, Plate_Q5_112_lha_final, Plate_Q5_116_lha_final, Plate_Q6_101_lha_final, Plate_Q6_105_lha_final, Plate_Q6_109_lha_final, Plate_Q6_113_lha_final, Plate_Q6_117_lha_final, Plate_Q7_102_lha_final, Plate_Q7_106_lha_final, Plate_Q7_110_lha_final, Plate_Q7_114_lha_final, Plate_Q7_120_lha_final, Plate_Q8_103_lha_final, Plate_Q8_107_lha_final, Plate_Q8_111_lha_final, Plate_Q8_115_lha_final))
+```
+

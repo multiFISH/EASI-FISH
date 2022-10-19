@@ -1,0 +1,59 @@
+---
+title: "LHA_scRNAseq_integration_2020"
+output: html_notebook
+
+Seurat version: 3.1.3
+chunk_output_type: inline
+
+---
+```{r}
+library(Seurat)
+```
+ 
+
+#Read into files
+```{r}
+LHA_Jackson_Male<-Read10X(data.dir="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Jackson_scRNAseq/male/")
+LHA_Jackson_Female<-Read10X(data.dir="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/Jackson_scRNAseq/female/")
+
+```
+
+```{r}
+# Initialize new Seurat object with the new raw data.
+LHA_Jackson_Female=CreateSeuratObject(LHA_Jackson_Female, min.cells = 5, min.features = 2)
+LHA_Jackson_Male=CreateSeuratObject(LHA_Jackson_Male, min.cells = 5, min.features = 2)
+LHA_Jackson_combined <- merge(LHA_Jackson_Male, LHA_Jackson_Female, add.cell.ids =c( "Male","Female"), project = "LHA_10X")
+
+```
+
+```{r}
+LHA_Jackson_combined <- PercentageFeatureSet(LHA_Jackson_combined,pattern = "^MT-", col.name = "percent.mt") %>% 
+    SCTransform(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+    RunUMAP(dims = 1:30) %>% FindClusters()
+```
+
+```{r}
+LHA_Jackson_combined<- PercentageFeatureSet(LHA_Jackson_combined,pattern = "^MT-", col.name = "percent.mt") %>% NormalizeData() %>% FindVariableFeatures(selection.method = "vst", nfeatures = 2000) %>% ScaleData(vars.to.regress = "percent.mt") %>% RunPCA() %>% FindNeighbors(dims = 1:30) %>% 
+RunUMAP(dims = 1:30) %>% FindClusters(resolution=0.5)
+```
+
+```{r}
+LHA_Jackson_combined=FindClusters(LHA_Jackson_combined, resolution=0.1)
+DimPlot(LHA_Jackson_combined,reduction='umap',label=TRUE)
+```
+```{r}
+SilhouetteRainCloudPlot(CalculateSilhouette(LHA_Stuber_combined, dims = 1:30))
+```
+
+```{r}
+FeaturePlot(LHA_Jackson_combined,features=c("Aqp4", "Olig2", "Opalin","Pdgfra","Ctss","Flt1","Map1b","Snap25", "Syp","Tubb3", "Slc17a6",'Slc32a1'), cols=c("lightgray","blue"),ncol=3)
+```
+
+```{r}
+LHA_Jackson_combined_neurons <- subset(LHA_Jackson_combined, idents = c("0","1","6","7"))
+```
+
+```{r}
+#Save the Seurat object for further analysis in part 2
+save(LHA_Jackson_combined_neurons,file="/Users/wangy6/Desktop/DATA/LHA_scRNAseq/2020_reanalysis/lha_jackson_neuron_2020Nov.Robj")
+```
